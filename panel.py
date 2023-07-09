@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from piece import Piece
+import time
 
 class Panel:
     
@@ -46,13 +47,19 @@ class Panel:
         img = cv2.circle(img, center_coord, radius, color, -1)
         return img
     
-    def color_dot(self, x, y, color) -> None:
+    def color_dot(self, x:int, y:int, piece:Piece) -> None:
         radius = 25
         diameter = 2 * radius
+        color = piece.color
         color = (int(color[0]), int(color[1]), int(color[2]))
         center_coord = (x * diameter + radius, y * diameter + radius)
         self.image = cv2.circle(self.image, center_coord, radius, color, -1)
+        print(f'({x} , {y})')
+        print(color)
         self.pieces[x][y].set_color(color)
+        print(self.pieces[x][y])
+        # time.sleep(30)
+
     
 
     ## Returns the set of unique pieces
@@ -63,6 +70,14 @@ class Panel:
                 for col in row:
                     self.unique_pieces.add(col)
         return self.unique_pieces
+    
+    def display(self, x, y) -> None:
+        # image = cv2.rotate(self.image, cv2.ROTATE_90_CLOCKWISE)
+        # image = cv2.flip(image, 1)
+        cv2.imshow(f'panel {x} {y}', self.image)
+        print(self)
+        # cv2.waitKey(0)
+        pass
 
 def test_create_panel_image(p:Panel) -> None:
     cv2.imshow('test',p.image)

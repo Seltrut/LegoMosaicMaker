@@ -8,7 +8,7 @@ class Piece():
     def __init__(self, lego_id:int=0, hex_cd:str='FFFFFF', color:np.ndarray = np.array([255, 255, 255])) -> None:
         self.lego_id = lego_id
         self.hex_cd = hex_cd
-        self.color = ColorHelper.hex_to_bgr(self.hex_cd)
+        self.color = color
 
     def __str__(self) -> str:
         return f'id: {self.lego_id}   color: #{self.hex_cd}     color: {self.color}'

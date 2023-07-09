@@ -7,6 +7,7 @@ from panel import Panel
 from piece import Piece
 import math
 
+
 pieces_in_order = []
 class MosMaker():
 
@@ -125,25 +126,41 @@ for x in range(0, height, interval):
         avg_img[x:next_x, y:next_y] = np.average(pixel, axis=(0,1))
 
 ####new stuff
-# x_panel_count = int(width / 16 / interval)
-# y_panel_count = int(height/ 16 / interval)
-# mosaic = [[Panel() for j in x_panel_count] for i in y_panel_count]
+x_panel_count = math.ceil(width / 16 / interval)
+y_panel_count = math.ceil(height/ 16 / interval)
+mosaic = [[Panel() for j in range(x_panel_count)] for i in range(y_panel_count)]
 
-# for x in range(0, int(height/interval)):
-#     for y in range(0, int(width/interval)):
-#         pos_x = x * interval
-#         pos_y = y * intervalqui
-#         next_x = pos_x+interval
-#         next_y = pos_y+interval
+print()
 
-#         pixel = img[pos_x:next_x, pos_y:next_y]
+for x in range(0, int(height/interval)):
+    for y in range(0, int(width/interval)):
+        pos_x = x * interval
+        pos_y = y * interval
+        next_x = pos_x+interval
+        next_y = pos_y+interval
 
-#         panel_x = int(x/16)
-#         panel_y = int(y/16)
-#         piece = Piece(lego_id='GET LEGO ID HERE', color=find_closest_color(colors, np.average(pixel, axis=(0,1))))
-#         mosaic[panel_x][panel_y].color_dot(int(x/len(mosaic)), int(y/len(mosaic[0])), piece.color)
+        pixel = img[pos_x:next_x, pos_y:next_y]
 
-#         lego_color = find_closest_color(colors, np.average(pixel, axis=(0,1)))
+        panel_x = int(x/16)
+        panel_y = int(y/16)
+        print(f'PANEL ({panel_x} , {panel_y})')
+        piece_color = find_closest_color(colors, np.average(pixel, axis=(0,1)))
+        print(f'PIECE_COLOR: {piece_color}')
+        print(type(list(color_dict.keys())[0]))
+        # print(f'color dict type: {type(color_dict)}')
+        piece_id = color_dict[tuple(piece_color)]
+        print(f'PIECE_ID: {piece_id}')
+        piece = Piece(lego_id=piece_id, color=piece_color)
+        print(f'({x} , {y})')
+        print(f'MOSAIC DIMS: {len(mosaic)} , {len(mosaic[0])}')
+        # print(f'X PANES: {x_panel_count}    Y PANELS: {y_panel_count}')
+
+        print(f'HEIGHT {int(height/interval)}')
+        print(f'width {int(width/interval)}')
+
+        mosaic[panel_x][panel_y].color_dot(y%16, x%16, piece)
+
+        # lego_color = find_closest_color(colors, np.average(pixel, axis=(0,1)))
         # directions = add_dot(int(y/interval), int(x/interval), directions, lego_color)
         # print(lego_color)
         # color_map[int(x/interval)][int(y/interval)] = color_dict[tuple(lego_color)]
@@ -151,8 +168,10 @@ for x in range(0, height, interval):
         # avg_img[x:next_x, y:next_y] = np.average(pixel, axis=(0,1))
 ####### END OF NEW STUFF
 
-
-
+for x in range(len(mosaic)):
+    for y in range(len(mosaic[0])):
+        mosaic[y][x].display(x, y)
+# mosaic[0][0].display()
 
 #Show the full direction picture
 cv2.imshow('directions', directions)
