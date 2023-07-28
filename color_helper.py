@@ -1,3 +1,5 @@
+import numpy as np 
+
 class ColorHelper:
     
     def hex_to_bgr(hex_cd):

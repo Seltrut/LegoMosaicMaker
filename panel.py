@@ -37,7 +37,6 @@ class Panel:
         if self.pieces[x][y].get_lego_id() == 0:
             self.pieces[x][y] = piece
             self.image = self.add_dot(x, y, self.image, piece.color)
-            # self.unique_pieces.add(piece)
 
     def add_dot(self, x:int, y:int, img:np.ndarray, color) -> np.ndarray:
         radius = 25
@@ -47,6 +46,7 @@ class Panel:
         img = cv2.circle(img, center_coord, radius, color, -1)
         return img
     
+    ## replace the piece at location (x,y) with the given piece
     def color_dot(self, x:int, y:int, piece:Piece) -> None:
         radius = 25
         diameter = 2 * radius
@@ -54,13 +54,7 @@ class Panel:
         color = (int(color[0]), int(color[1]), int(color[2]))
         center_coord = (x * diameter + radius, y * diameter + radius)
         self.image = cv2.circle(self.image, center_coord, radius, color, -1)
-        print(f'({x} , {y})')
-        print(color)
         self.pieces[x][y].set_color(color)
-        print(self.pieces[x][y])
-        # time.sleep(30)
-
-    
 
     ## Returns the set of unique pieces
     ## If the set is empty the set is generated from the current pieces on the panel
@@ -71,14 +65,12 @@ class Panel:
                     self.unique_pieces.add(col)
         return self.unique_pieces
     
+    ## Displays the panel in it's own window
     def display(self, x, y) -> None:
-        # image = cv2.rotate(self.image, cv2.ROTATE_90_CLOCKWISE)
-        # image = cv2.flip(image, 1)
         cv2.imshow(f'panel {x} {y}', self.image)
-        print(self)
-        # cv2.waitKey(0)
-        pass
+        cv2.waitKey(0)
 
+## Tests displaying a panel
 def test_create_panel_image(p:Panel) -> None:
     cv2.imshow('test',p.image)
     cv2.waitKey(0)
@@ -89,9 +81,6 @@ if __name__ == "__main__":
     p.color_dot(3, 4, d.color)
     print(p.pieces[3][4])
     print(p.pieces[4][4])
-    # print(p)
-    # p.add(1,7,Piece(lego_id=4, hex_cd='a'))
-    # print(p.get_unique_pieces())
     test_create_panel_image(p)
 
 
