@@ -1,4 +1,5 @@
 *directions
 *.db
-pics/*
+/pics/*
+/directions/*
 what.py
