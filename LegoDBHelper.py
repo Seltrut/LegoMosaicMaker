@@ -55,7 +55,7 @@ class LegoDBHelper():
       hex_cd = color_info['rgb']
       name = piece['color_name'] 
       external_ids = color_info['external_ids']
-      owl_id = external_ids['BrickOwl']['ext_ids'][0] ##THIS IS A COLOR ID NOT A FUCKING PIECE ID, USELESS INFO FOR THIS SAME WITH NEXT ONE
+      owl_id = external_ids['BrickOwl']['ext_ids'][0] ##THIS IS A COLOR ID NOT A PIECE ID, USELESS INFO FOR THIS SAME WITH NEXT ONE
       link_id = external_ids['BrickLink']['ext_ids'][0]
       # lego_id = external_ids['LEGO']['ext_ids'][0] #old way, maybe a color id on lego site
       if len(piece['elements']) == 0:
@@ -124,7 +124,7 @@ class LegoDBHelper():
 if __name__ == "__main__":
    
 
-   API_KEY = "9ae6321fbe86b420e884560f124ce1bd"
+   API_KEY = "#### YOUR REBRICK API KEY HERE ####"
    # piece_id = 98138 # 98138 is flat dots
    # piece_id = 85861 # 85861 us dots that can still connect with hole?
    piece_id = 6141 # 85861 us dots that can still connect
